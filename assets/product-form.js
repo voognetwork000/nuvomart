@@ -298,6 +298,19 @@ class ProductFormComponent extends Component {
     this.#processAddToCart(undefined, undefined, event);
   }
 
+  /**
+   * Adds the selected variant to the cart and redirects straight to checkout.
+   * @param {Event} event - The click event.
+   */
+  buyNow(event) {
+    event.preventDefault();
+
+    const variantId = this.refs.variantId?.value;
+    if (!variantId) return;
+
+    window.location.href = `${Theme.routes.cart_url}/${variantId}:${this.#getQuantity()}?checkout`;
+  }
+
   /** @returns {string | undefined} */
   #getIntendedVariantId() {
     return new URL(window.location.href).searchParams.get('variant') || this.refs.variantId?.value || undefined;
