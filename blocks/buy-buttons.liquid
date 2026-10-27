@@ -224,17 +224,6 @@
             add_to_cart_text: add_to_cart_text
           %}
 
-          {%- if can_add_to_cart -%}
-            <button
-              type="button"
-              class="buy-now-button"
-              ref="buyNowButton"
-              on:click="/buyNow"
-            >
-              {{ 'products.product.buy_now' | t }}
-            </button>
-          {%- endif -%}
-
           {% content_for 'block',
             type: 'accelerated-checkout',
             id: 'accelerated-checkout',
