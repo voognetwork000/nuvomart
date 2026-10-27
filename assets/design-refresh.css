@@ -1,0 +1,105 @@
+/*
+ * Design refresh
+ * Keeps the existing color palette and layout, and adds tighter type,
+ * consistent spacing, and more polished buttons, cards and inputs.
+ */
+
+:root {
+  --refresh-radius: 12px;
+  --refresh-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --refresh-shadow: 0 10px 30px -18px rgb(0 0 0 / 35%);
+}
+
+/* Typography: clearer hierarchy */
+h1,
+h2,
+h3,
+.h1,
+.h2,
+.h3 {
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1,
+.h1 {
+  line-height: 1.1;
+}
+
+p,
+li {
+  text-wrap: pretty;
+}
+
+/* Buttons: smoother, with a clear focus ring */
+.button,
+.button-secondary {
+  transition:
+    background-color 0.25s var(--refresh-ease),
+    color 0.25s var(--refresh-ease),
+    border-color 0.25s var(--refresh-ease),
+    transform 0.2s var(--refresh-ease),
+    box-shadow 0.25s var(--refresh-ease);
+  letter-spacing: 0.01em;
+}
+
+.button:hover,
+.button-secondary:hover {
+  transform: translateY(-1px);
+}
+
+.button:active,
+.button-secondary:active {
+  transform: translateY(0);
+}
+
+.button:focus-visible,
+.button-secondary:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 3px;
+}
+
+/* Inputs: consistent corners and focus state */
+input:not([type='checkbox'], [type='radio']),
+select,
+textarea {
+  transition: border-color 0.2s var(--refresh-ease), box-shadow 0.2s var(--refresh-ease);
+}
+
+input:not([type='checkbox'], [type='radio']):focus,
+select:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-foreground) 12%, transparent);
+}
+
+/* Product cards: softer frame and hover lift */
+.product-card {
+  transition: transform 0.3s var(--refresh-ease);
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+}
+
+.product-card img {
+  border-radius: var(--refresh-radius);
+}
+
+.product-card__link {
+  text-decoration: none;
+}
+
+/* Motion: respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
