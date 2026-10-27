@@ -2284,5 +2284,37 @@
         "default": "equal-width-buttons"
       }
     ]
+  },
+  {
+    "name": "Payments",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Cash on delivery and prepaid"
+      },
+      {
+        "type": "text",
+        "id": "cod_fee_variant_id",
+        "label": "COD extra charge variant ID",
+        "info": "Variant ID of a hidden product in Shopify that holds the extra cash-on-delivery charge. Leave blank to disable the charge."
+      },
+      {
+        "type": "text",
+        "id": "prepaid_discount_code",
+        "label": "Prepaid discount code",
+        "info": "Discount code applied automatically when a customer chooses Buy Now. Create it in Shopify admin > Discounts."
+      },
+      {
+        "type": "range",
+        "id": "prepaid_discount_percent",
+        "label": "Prepaid discount shown to customers",
+        "min": 0,
+        "max": 50,
+        "step": 1,
+        "unit": "%",
+        "default": 10,
+        "info": "Display only. Keep it in line with the prepaid discount code."
+      }
+    ]
   }
 ]
