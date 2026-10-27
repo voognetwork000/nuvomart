@@ -1,0 +1,105 @@
+{%- doc -%}
+  Highlights the prepaid saving and the extra cash-on-delivery charge so customers can see the difference before they pay.
+  Prepaid is shown when a discount percentage is set in the theme settings. COD is shown when a COD charge variant is set.
+
+  @example
+  {% render 'payment-incentive' %}
+{%- enddoc -%}
+
+{% liquid
+  assign discount_percent = settings.prepaid_discount_percent | default: 0
+  assign has_cod_charge = false
+  if settings.cod_fee_variant_id != blank
+    assign has_cod_charge = true
+  endif
+%}
+
+{% if discount_percent > 0 or has_cod_charge %}
+  <div
+    class="payment-incentive"
+    role="note"
+    data-testid="payment-incentive"
+  >
+    <p class="payment-incentive__title">{{ 'payment.incentive_title' | t }}</p>
+    <ul
+      class="payment-incentive__list"
+      role="list"
+    >
+      {%- if discount_percent > 0 -%}
+        <li class="payment-incentive__item payment-incentive__item--prepaid">
+          <span class="payment-incentive__badge">
+            {{ 'payment.prepaid_badge' | t: percent: discount_percent }}
+          </span>
+          <span class="payment-incentive__text">
+            {{ 'payment.prepaid_save' | t: percent: discount_percent }}
+          </span>
+        </li>
+      {%- endif -%}
+      {%- if has_cod_charge -%}
+        <li class="payment-incentive__item payment-incentive__item--cod">
+          <span class="payment-incentive__badge payment-incentive__badge--cod">
+            {{ 'payment.cod_label' | t }}
+          </span>
+          <span class="payment-incentive__text">
+            {{ 'payment.cod_extra' | t }}
+          </span>
+        </li>
+      {%- endif -%}
+    </ul>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .payment-incentive {
+    display: grid;
+    gap: var(--gap-xs);
+    padding: var(--padding-sm) var(--padding-md);
+    border: 1px solid rgb(var(--color-foreground-rgb) / 0.12);
+    border-radius: var(--style-border-radius-buttons-primary);
+    background: rgb(var(--color-foreground-rgb) / 0.03);
+    font-size: var(--font-size--sm);
+  }
+
+  .payment-incentive__title {
+    margin: 0;
+    font-weight: 600;
+    color: var(--color-foreground-heading);
+  }
+
+  .payment-incentive__list {
+    display: grid;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .payment-incentive__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xs);
+  }
+
+  .payment-incentive__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 999px;
+    background: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    font-size: var(--font-size--xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .payment-incentive__badge--cod {
+    background: rgb(var(--color-foreground-rgb) / 0.08);
+    color: var(--color-foreground);
+  }
+
+  .payment-incentive__text {
+    color: var(--color-foreground-secondary);
+  }
+{% endstylesheet %}

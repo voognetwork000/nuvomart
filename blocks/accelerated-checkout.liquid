@@ -20,7 +20,33 @@
 
 {% capture accelerated_checkout_button %}
   {% if product != blank and form_obj != blank %}
-    {{ form_obj | payment_button }}
+    <payment-options
+      class="payment-options"
+      data-cod-fee-variant-id="{{ settings.cod_fee_variant_id }}"
+      data-prepaid-discount-code="{{ settings.prepaid_discount_code }}"
+    >
+      {% render 'payment-incentive' %}
+      <button
+        type="button"
+        class="button payment-options__button payment-options__button--prepaid"
+        data-payment-method="prepaid"
+        data-testid="buy-now-button"
+      >
+        {{ 'payment.buy_now' | t }}
+      </button>
+      <button
+        type="button"
+        class="button button-secondary payment-options__button payment-options__button--cod"
+        data-payment-method="cod"
+        data-testid="buy-cod-button"
+      >
+        {{ 'payment.buy_cod' | t }}
+      </button>
+    </payment-options>
+    <script
+      src="{{ 'payment-options.js' | asset_url }}"
+      type="module"
+    ></script>
   {% endif %}
 {% endcapture %}
 
@@ -41,6 +67,54 @@
 {% endif %}
 
 {% render 'buy-buttons-styles' %}
+
+{% stylesheet %}
+  .payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm);
+    width: 100%;
+  }
+
+  .payment-options__button {
+    width: 100%;
+    min-height: var(--height-buy-buttons);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding-inline: var(--padding-md);
+    letter-spacing: 0.02em;
+    white-space: normal;
+    text-align: center;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .payment-options__button--prepaid {
+    box-shadow: 0 8px 20px rgb(var(--color-foreground-rgb) / 0.12);
+  }
+
+  .payment-options__button:not([disabled]):hover {
+    transform: translateY(-1px);
+  }
+
+  .payment-options__button--prepaid:not([disabled]):hover {
+    box-shadow: 0 12px 26px rgb(var(--color-foreground-rgb) / 0.18);
+  }
+
+  .payment-options__button:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .payment-options__button {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

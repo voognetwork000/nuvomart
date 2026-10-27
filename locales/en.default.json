@@ -350,6 +350,15 @@
     "blog_post_date": "Date",
     "blog_post_description": "An excerpt of your blog post's content"
   },
+  "payment": {
+    "buy_now": "Buy Now",
+    "buy_cod": "Buy COD + Extra COD Charges",
+    "incentive_title": "Choose how you pay",
+    "prepaid_save": "Pay prepaid and save {{ percent }}% on this order",
+    "prepaid_badge": "Save {{ percent }}%",
+    "cod_label": "Cash on delivery",
+    "cod_extra": "Extra COD charges apply to this order"
+  },
   "products": {
     "product": {
       "add_to_cart": "Add to cart",
