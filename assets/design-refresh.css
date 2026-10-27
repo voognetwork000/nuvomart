@@ -93,6 +93,53 @@ textarea:focus {
   text-decoration: none;
 }
 
+/* Brand accents: text selection and animated link underlines */
+::selection {
+  background: var(--color-foreground);
+  color: var(--color-background);
+}
+
+main a:not(.button, .button-secondary, .button-unstyled, .product-card__link) {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  text-decoration: none;
+  transition: background-size 0.35s var(--refresh-ease);
+}
+
+main a:not(.button, .button-secondary, .button-unstyled, .product-card__link):hover {
+  background-size: 100% 1px;
+}
+
+/* Product cards: image zoom with a clipped frame */
+.product-card__image-wrapper,
+.product-card .media {
+  overflow: hidden;
+  border-radius: var(--refresh-radius);
+}
+
+.product-card:hover img {
+  transform: scale(1.04);
+}
+
+.product-card img {
+  transition: transform 0.6s var(--refresh-ease);
+}
+
+/* Prices: even digit widths so price columns line up */
+.price,
+.price-item,
+.product-card .price {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hero slides: stronger readability over imagery */
+.slideshow .slide__content,
+.slideshow [class*='content'] {
+  text-shadow: 0 1px 12px rgb(0 0 0 / 25%);
+}
+
 /* Motion: respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
   *,
